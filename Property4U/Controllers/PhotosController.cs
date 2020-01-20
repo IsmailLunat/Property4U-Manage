@@ -29,7 +29,7 @@ namespace Property4U.Controllers
         public async Task<ActionResult> Index()
         {
             strCurrentUserId = User.Identity.GetUserId();
-            var photos = db.Photos.Include(p => p.Property).Where(p => p.Property.AgentID == strCurrentUserId);
+            var photos = db.Photos.Include(p => p.Property).Where(p => p.Property.AgentId == strCurrentUserId);
             return View( await photos.ToListAsync());
         }
 
@@ -52,7 +52,7 @@ namespace Property4U.Controllers
         public async Task<ActionResult> Create()
         {
             strCurrentUserId = User.Identity.GetUserId();
-            ViewBag.PropertyIDList = new SelectList(await db.Properties.Where(p => p.Availability.ToString().Equals("Yes") && p.AgentID.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID");
+            ViewBag.PropertyIDList = new SelectList(await db.Properties.Where(p => p.Availability.ToString().Equals("Yes") && p.AgentId.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID");
             ViewBag.UploadedOn = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             return View();
         }
@@ -102,7 +102,7 @@ namespace Property4U.Controllers
             }
 
             strCurrentUserId = User.Identity.GetUserId();
-            ViewBag.PropertyIDList = new SelectList(await db.Properties.Where(p => p.Availability.ToString().Equals("Yes") && p.AgentID.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID", photo.PropertyID);
+            ViewBag.PropertyIDList = new SelectList(await db.Properties.Where(p => p.Availability.ToString().Equals("Yes") && p.AgentId.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID", photo.PropertyId);
             ViewBag.UploadedOn = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             return View(photo);
         }
@@ -120,7 +120,7 @@ namespace Property4U.Controllers
                 return HttpNotFound();
             }
             strCurrentUserId = User.Identity.GetUserId();
-            ViewBag.PropertyIDList = new SelectList(await db.Properties.Where(p => p.Availability.ToString().Equals("Yes") && p.AgentID.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID", photo.PropertyID);
+            ViewBag.PropertyIDList = new SelectList(await db.Properties.Where(p => p.Availability.ToString().Equals("Yes") && p.AgentId.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID", photo.PropertyId);
             ViewBag.LastEdit = DateTime.Now;
             return View(photo);
         }
@@ -179,7 +179,7 @@ namespace Property4U.Controllers
                 return RedirectToAction("Index");
             }
             strCurrentUserId = User.Identity.GetUserId();
-            ViewBag.PropertyIDList = new SelectList(await db.Properties.Where(p => p.Availability.ToString().Equals("Yes") && p.AgentID.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID", photo.PropertyID);
+            ViewBag.PropertyIDList = new SelectList(await db.Properties.Where(p => p.Availability.ToString().Equals("Yes") && p.AgentId.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID", photo.PropertyId);
             ViewBag.LastEdit = DateTime.Now;
             return View(photo);
         }

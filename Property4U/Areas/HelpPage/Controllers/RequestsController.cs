@@ -31,7 +31,7 @@ namespace Property4U.Areas.HelpPage.Controllers
             //HttpContext.Current.User.Identity.GetUserId();
             //RequestContext.Principal.Identity.GetUserId();
             strCurrentUserId = User.Identity.GetUserId();
-            return db.Requests.Where(r => r.Property.AgentID == strCurrentUserId && r.RequestStatus.ToString().Equals("Pending")).ToList();
+            return db.Requests.Where(r => r.Property.AgentId == strCurrentUserId && r.RequestStatus.ToString().Equals("Pending")).ToList();
         }
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Property4U.Areas.HelpPage.Controllers
             if (User.IsInRole("Member"))
                 return db.Requests.Where(req => req.MemberID == strCurrentUserId).ToList();
             else if (User.IsInRole("Agent"))
-                return db.Requests.Where(req => req.Property.AgentID == strCurrentUserId).ToList();
+                return db.Requests.Where(req => req.Property.AgentId == strCurrentUserId).ToList();
             else
                 return db.Requests.ToList();
         }

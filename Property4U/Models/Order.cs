@@ -1,21 +1,18 @@
-﻿using IdentitySample.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
+using IdentitySample.Models;
 
 namespace Property4U.Models
 {
     public class Order
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Display(Name = "AgentID")]
-        public string AgentID { get; set; }
+        public int AgentId { get; set; }
 
         [Required]
         [StringLength(50, ErrorMessage = "Order Title cannot be longer than 50 characters.")]
@@ -66,8 +63,9 @@ namespace Property4U.Models
         [Display(Name = "Last Edit")]
         public DateTime? LastEdit { get; set; }
 
-        [ForeignKey("AgentID")]
+        [ForeignKey("AgentId")]
         public virtual ApplicationUser Agent { get; set; }
+
         public virtual ICollection<Ad> Ads { get; set; }
     }
 
@@ -75,10 +73,13 @@ namespace Property4U.Models
     {
         [Display(Name = "1140 x 146")]
         FullBanner,
+
         [Display(Name = "600 x 50")]
         SmallBanner,
+
         [Display(Name = "270 x 300")]
         Square,
+
         [Display(Name = "270 x 400")]
         FatSkyscraper
     }
@@ -87,10 +88,13 @@ namespace Property4U.Models
     {
         [Display(Name = "24 Hours")]
         Hours_24 = 1,
+
         [Display(Name = "2 Days")]
         Days_2 = 2,
+
         [Display(Name = "3 Days")]
         Days_3 = 3,
+
         Week = 7
     }
 

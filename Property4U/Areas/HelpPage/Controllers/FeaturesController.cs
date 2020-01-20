@@ -59,7 +59,7 @@ namespace Property4U.Areas.HelpPage.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != feature.ID)
+            if (id != feature.Id)
             {
                 return BadRequest();
             }
@@ -101,7 +101,7 @@ namespace Property4U.Areas.HelpPage.Controllers
             db.Features.Add(feature);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = feature.ID }, feature);
+            return CreatedAtRoute("DefaultApi", new { id = feature.Id }, feature);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Property4U.Areas.HelpPage.Controllers
 
         private bool FeatureExists(int id)
         {
-            return db.Features.Count(e => e.ID == id) > 0;
+            return db.Features.Count(e => e.Id == id) > 0;
         }
     }
 }

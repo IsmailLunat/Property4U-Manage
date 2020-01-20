@@ -38,11 +38,11 @@ namespace Property4U.Controllers
             else {
                 if (reportAbuse == null)
                 {
-                    feedbacks = db.Feedbacks.Include(f => f.Member).Include(f => f.Properties).Where(m => m.MemberID.Equals(strCurrentUserId) && m.For.ToString().Equals("Process_Feedback"));
+                    feedbacks = db.Feedbacks.Include(f => f.Member).Include(f => f.Properties).Where(m => m.MemberId.Equals(strCurrentUserId) && m.For.ToString().Equals("Process_Feedback"));
                 }
                 else if (reportAbuse == true)
                 {
-                    feedbacks = db.Feedbacks.Include(f => f.Member).Include(f => f.Properties).Where(m => m.MemberID.Equals(strCurrentUserId) && m.For.ToString().Equals("Report_Abuse"));
+                    feedbacks = db.Feedbacks.Include(f => f.Member).Include(f => f.Properties).Where(m => m.MemberId.Equals(strCurrentUserId) && m.For.ToString().Equals("Report_Abuse"));
                 }
             }
             return View(await feedbacks.ToListAsync());
@@ -92,11 +92,11 @@ namespace Property4U.Controllers
             {
                 if (feedback.For.ToString().Equals("Report_Abuse"))
                 {
-                    var property = await db.Properties.FindAsync(feedback.PropertyID);
+                    var property = await db.Properties.FindAsync(feedback.PropertyId);
                     var flagCount = (property.Flags == null) ? 1 : (property.Flags + 1);
                     // Report Abuse > 5 - Availability Disabled
                     var propertyState = (flagCount < 5) ? "0" : "1";
-                    db.Database.ExecuteSqlCommand("UPDATE [dbo].[Property] SET Flags = {0}, Availability = {1} WHERE ID = {2}", flagCount, propertyState, feedback.PropertyID);
+                    db.Database.ExecuteSqlCommand("UPDATE [dbo].[Property] SET Flags = {0}, Availability = {1} WHERE ID = {2}", flagCount, propertyState, feedback.PropertyId);
                 }
                 db.Feedbacks.Add(feedback);
                 await db.SaveChangesAsync();
@@ -112,12 +112,12 @@ namespace Property4U.Controllers
 
             strCurrentUserId = User.Identity.GetUserId();
             var ownerMember = await db.Users.Where(d => d.Id == strCurrentUserId).ToListAsync();
-            ViewBag.MemberIDList = new SelectList(ownerMember, "Id", "Id", feedback.MemberID);
+            ViewBag.MemberIDList = new SelectList(ownerMember, "Id", "Id", feedback.MemberId);
             
             // Allow Feeback to those Properties for which the Member Requested for visted with RequestStatus "Accepted" 
             var allowedFeebackProperties = await db.Properties.SqlQuery("SELECT p.* FROM Property p INNER JOIN Request rq ON p.ID = rq.PropertyID WHERE MemberID = {0} AND RequestStatus = 2", strCurrentUserId).ToListAsync();
 
-            ViewBag.PropertyIDList = new SelectList(allowedFeebackProperties, "ID", "ID", feedback.PropertyID);
+            ViewBag.PropertyIDList = new SelectList(allowedFeebackProperties, "ID", "ID", feedback.PropertyId);
             ViewBag.FeedbackOn = DateTime.Now.ToString("yyyy-MM-dd");
             return View(feedback);
         }
@@ -195,7 +195,7 @@ namespace Property4U.Controllers
                 }
                 // Report Abuse > 5 - Availability Disabled
                 var propertyState = (flagCount <= 5) ? 0 : 1;
-                db.Database.ExecuteSqlCommand("UPDATE [dbo].[Property] SET Flags = {0}, Availability = {1} WHERE ID = {2}", flagCount, propertyState, feedback.PropertyID);
+                db.Database.ExecuteSqlCommand("UPDATE [dbo].[Property] SET Flags = {0}, Availability = {1} WHERE ID = {2}", flagCount, propertyState, feedback.PropertyId);
             }
 
             db.Feedbacks.Remove(feedback);

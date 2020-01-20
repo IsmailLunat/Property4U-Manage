@@ -61,7 +61,7 @@ namespace Property4U.Areas.HelpPage.Controllers
         {
             strCurrentUserId = User.Identity.GetUserId();
             if(User.IsInRole("Agent"))
-                return db.Biddings.Where(b => b.Property.AgentID == strCurrentUserId).ToList();
+                return db.Biddings.Where(b => b.Property.AgentId == strCurrentUserId).ToList();
             else
                 return db.Biddings.ToList();
         }
@@ -98,7 +98,7 @@ namespace Property4U.Areas.HelpPage.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != bidding.ID)
+            if (id != bidding.Id)
             {
                 return BadRequest();
             }
@@ -141,7 +141,7 @@ namespace Property4U.Areas.HelpPage.Controllers
             db.Biddings.Add(bidding);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = bidding.ID }, bidding);
+            return CreatedAtRoute("DefaultApi", new { id = bidding.Id }, bidding);
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace Property4U.Areas.HelpPage.Controllers
 
         private bool BiddingExists(int id)
         {
-            return db.Biddings.Count(e => e.ID == id) > 0;
+            return db.Biddings.Count(e => e.Id == id) > 0;
         }
     }
 }

@@ -48,7 +48,7 @@ namespace Property4U.Controllers
             strCurrentUserId = User.Identity.GetUserId(); 
             var ownerAgent = await db.Users.Where(d => d.Id == strCurrentUserId).ToListAsync();
             ViewBag.AgentIDList = new SelectList(ownerAgent, "Id", "ID");
-            ViewBag.ReviewIDList = new SelectList(await db.Reviews.Where(p => p.Property.AgentID.ToString().Equals(strCurrentUserId)).ToListAsync(), "ID", "ID");
+            ViewBag.ReviewIDList = new SelectList(await db.Reviews.Where(p => p.Property.AgentId.ToString().Equals(strCurrentUserId)).ToListAsync(), "ID", "ID");
             ViewBag.ReplyOn = DateTime.Now;
             return View();
         }
@@ -70,7 +70,7 @@ namespace Property4U.Controllers
             strCurrentUserId = User.Identity.GetUserId();
             var ownerAgent = await db.Users.Where(d => d.Id == strCurrentUserId).ToListAsync();
             ViewBag.AgentIDList = new SelectList(ownerAgent, "Id", "ID");
-            ViewBag.ReviewIDList = new SelectList(await db.Reviews.Where(p => p.Property.AgentID.ToString().Equals(strCurrentUserId)).ToListAsync(), "ID", "ID");
+            ViewBag.ReviewIDList = new SelectList(await db.Reviews.Where(p => p.Property.AgentId.ToString().Equals(strCurrentUserId)).ToListAsync(), "ID", "ID");
             ViewBag.ReplyOn = DateTime.Now;
             return View(reply);
         }
@@ -91,7 +91,7 @@ namespace Property4U.Controllers
             strCurrentUserId = User.Identity.GetUserId();
             var ownerAgent = await db.Users.Where(d => d.Id == strCurrentUserId).ToListAsync();
             ViewBag.AgentIDList = new SelectList(ownerAgent, "Id", "ID");
-            ViewBag.ReviewIDList = new SelectList(await db.Reviews.Where(p => p.Property.AgentID.ToString().Equals(strCurrentUserId)).ToListAsync(), "ID", "ID");
+            ViewBag.ReviewIDList = new SelectList(await db.Reviews.Where(p => p.Property.AgentId.ToString().Equals(strCurrentUserId)).ToListAsync(), "ID", "ID");
             ViewBag.ReplyOn = reply.ReplyOn;
             return View(reply);
         }
@@ -113,7 +113,7 @@ namespace Property4U.Controllers
             strCurrentUserId = User.Identity.GetUserId();
             var ownerAgent = await db.Users.Where(d => d.Id == strCurrentUserId).ToListAsync();
             ViewBag.AgentIDList = new SelectList(ownerAgent, "Id", "ID");
-            ViewBag.ReviewIDList = new SelectList(await db.Reviews.Where(p => p.Property.AgentID.ToString().Equals(strCurrentUserId)).ToListAsync(), "ID", "ID");
+            ViewBag.ReviewIDList = new SelectList(await db.Reviews.Where(p => p.Property.AgentId.ToString().Equals(strCurrentUserId)).ToListAsync(), "ID", "ID");
             ViewBag.ReplyOn = reply.ReplyOn;
             return View(reply);
         }

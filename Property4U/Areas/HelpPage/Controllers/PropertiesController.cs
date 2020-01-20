@@ -31,7 +31,7 @@ namespace Property4U.Areas.HelpPage.Controllers
         {
             strCurrentUserId = User.Identity.GetUserId();
             if (User.IsInRole("Agent"))
-                return db.Properties.Where(p => p.AgentID == strCurrentUserId).ToList();
+                return db.Properties.Where(p => p.AgentId == strCurrentUserId).ToList();
             else
                 return db.Properties.ToList();
         }
@@ -168,7 +168,7 @@ namespace Property4U.Areas.HelpPage.Controllers
                 else
                     featuredState = new Property { Featured = Featured.No };
 
-                db.Database.ExecuteSqlCommand("UPDATE [dbo].[Property] SET Featured = {0} WHERE ID = {1}", featuredState.Featured.Value, property.ID);
+                db.Database.ExecuteSqlCommand("UPDATE [dbo].[Property] SET Featured = {0} WHERE ID = {1}", featuredState.Featured.Value, property.Id);
                 await db.SaveChangesAsync();
             }
             // }
@@ -202,7 +202,7 @@ namespace Property4U.Areas.HelpPage.Controllers
                  where longitude != null && latitude != null
                  select new NearByAddresses
                  {
-                     ID = location.ID,
+                     ID = location.Id,
                      Name = location.Name,
                      Number = location.Number,
                      Floor = location.Floor,
@@ -254,7 +254,7 @@ namespace Property4U.Areas.HelpPage.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != property.ID)
+            if (id != property.Id)
             {
                 return BadRequest();
             }
@@ -297,7 +297,7 @@ namespace Property4U.Areas.HelpPage.Controllers
             db.Properties.Add(property);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = property.ID }, property);
+            return CreatedAtRoute("DefaultApi", new { id = property.Id }, property);
         }
 
         /// <summary>
@@ -332,7 +332,7 @@ namespace Property4U.Areas.HelpPage.Controllers
 
         private bool PropertyExists(int id)
         {
-            return db.Properties.Count(e => e.ID == id) > 0;
+            return db.Properties.Count(e => e.Id == id) > 0;
         }
     }
 }

@@ -59,7 +59,7 @@ namespace Property4U.Areas.HelpPage.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != address.ID)
+            if (id != address.Id)
             {
                 return BadRequest();
             }
@@ -101,7 +101,7 @@ namespace Property4U.Areas.HelpPage.Controllers
             db.Addresses.Add(address);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = address.ID }, address);
+            return CreatedAtRoute("DefaultApi", new { id = address.Id }, address);
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace Property4U.Areas.HelpPage.Controllers
 
         private bool AddressExists(int id)
         {
-            return db.Addresses.Count(e => e.ID == id) > 0;
+            return db.Addresses.Count(e => e.Id == id) > 0;
         }
     }
 }

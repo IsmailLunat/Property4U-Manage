@@ -29,7 +29,7 @@ namespace Property4U.Areas.HelpPage.Controllers
         public IEnumerable<Review> GetReviews()
         {
             strCurrentUserId = User.Identity.GetUserId();
-            return db.Reviews.Where(r => r.Property.AgentID == strCurrentUserId ).ToList();
+            return db.Reviews.Where(r => r.Property.AgentId == strCurrentUserId ).ToList();
         }
 
         /// <summary>

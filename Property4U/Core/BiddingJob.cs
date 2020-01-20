@@ -40,20 +40,20 @@ namespace Property4U.Core
                     {
                         foreach (var todayBindings in todayBindingResultsAwaitedL)
                         {
-                            var winningBid = db.Bids.SqlQuery("SELECT * FROM Bid where BidOn = (select Max(BidOn) FROM Bid WHERE Price = (select MAX(bi.Price) as Price FROM Bid bi INNER JOIN Bidding bg ON bi.BiddingID = bg.ID WHERE price >= MinExp and bi.BiddingID = @p0))", todayBindings.ID);
+                            var winningBid = db.Bids.SqlQuery("SELECT * FROM Bid where BidOn = (select Max(BidOn) FROM Bid WHERE Price = (select MAX(bi.Price) as Price FROM Bid bi INNER JOIN Bidding bg ON bi.BiddingID = bg.ID WHERE price >= MinExp and bi.BiddingID = @p0))", todayBindings.Id);
                             var winningBidL = await winningBid.ToListAsync();
                             if (winningBidL != null && winningBidL.Count != 0)
                             {
                                 foreach (var winningB in winningBidL)
                                 {
-                                    await db.Database.ExecuteSqlCommandAsync("UPDATE Bid SET BidStatus = 0 WHERE ID = {0} AND BiddingID = {1}", winningB.ID, todayBindings.ID);
-                                    await db.Database.ExecuteSqlCommandAsync("UPDATE Bid SET BidStatus = 3 WHERE ID != {0} AND BiddingID = {1}", winningB.ID, todayBindings.ID);
-                                    await db.Database.ExecuteSqlCommandAsync("UPDATE Bidding SET WinningBid = {0}, BiddingStatus = 2 WHERE ID = {1}", winningB.ID, todayBindings.ID);
+                                    await db.Database.ExecuteSqlCommandAsync("UPDATE Bid SET BidStatus = 0 WHERE ID = {0} AND BiddingID = {1}", winningB.Id, todayBindings.Id);
+                                    await db.Database.ExecuteSqlCommandAsync("UPDATE Bid SET BidStatus = 3 WHERE ID != {0} AND BiddingID = {1}", winningB.Id, todayBindings.Id);
+                                    await db.Database.ExecuteSqlCommandAsync("UPDATE Bidding SET WinningBid = {0}, BiddingStatus = 2 WHERE ID = {1}", winningB.Id, todayBindings.Id);
                                 }
                             }
                             else
                             {
-                                await db.Database.ExecuteSqlCommandAsync("UPDATE Bidding SET BiddingStatus = 2 WHERE ID = {0}", todayBindings.ID);
+                                await db.Database.ExecuteSqlCommandAsync("UPDATE Bidding SET BiddingStatus = 2 WHERE ID = {0}", todayBindings.Id);
                             }
                         }
                     }
@@ -65,7 +65,7 @@ namespace Property4U.Core
                     {
                         foreach (var todayActiveBindings in todayBindingActivationAwaitedL)
                         {
-                            await db.Database.ExecuteSqlCommandAsync("UPDATE Bidding SET BiddingStatus = 1 WHERE ID = {0} AND BiddingStatus = 0", todayActiveBindings.ID);
+                            await db.Database.ExecuteSqlCommandAsync("UPDATE Bidding SET BiddingStatus = 1 WHERE ID = {0} AND BiddingStatus = 0", todayActiveBindings.Id);
                         }
                     }
 
@@ -80,10 +80,10 @@ namespace Property4U.Core
                     {
                         foreach (var todayPropertyRenewalBlock in todayPropertyRenewalAwaitedL)
                         {
-                            await db.Database.ExecuteSqlCommandAsync("UPDATE Property SET Avaliability = 1 WHERE ID = @p0", todayPropertyRenewalBlock.ID);
+                            await db.Database.ExecuteSqlCommandAsync("UPDATE Property SET Avaliability = 1 WHERE ID = @p0", todayPropertyRenewalBlock.Id);
                             //await db.Database.ExecuteSqlCommandAsync("INSERT INTO Renewal(PropertyID, Description, Price, Status, Dated) values (" + todayPropertyRenewalBlock.ID + ", 'Renewal Alert - " + todayPropertyRenewalBlock.Title + " - Published On (" + todayPropertyRenewalBlock.PublishOn + ")', " + systemConfigurations.RenewalCost + ", 0, " + DateTime.Now.Date + ")");
 
-                            db.Renewals.Add(new Renewal { PropertyID = todayPropertyRenewalBlock.ID, Description = "Renewal Alert - " + todayPropertyRenewalBlock.Title + " - Published On (" + todayPropertyRenewalBlock.PublishOn + ")", Price = systemConfigurations.RenewalCost, Status = ReStatus.Active, Dated = DateTime.Now.Date });
+                            db.Renewals.Add(new Renewal { PropertyID = todayPropertyRenewalBlock.Id, Description = "Renewal Alert - " + todayPropertyRenewalBlock.Title + " - Published On (" + todayPropertyRenewalBlock.PublishOn + ")", Price = systemConfigurations.RenewalCost, Status = ReStatus.Active, Dated = DateTime.Now.Date });
                         }
                     }
 
@@ -94,8 +94,8 @@ namespace Property4U.Core
                     {
                         foreach (var todayExpiredAds in todayAdExpirationAwaitedL)
                         {
-                            await db.Database.ExecuteSqlCommandAsync("UPDATE Ad SET AdStatus = 2, Remedies = 'Expiry Alert - " + todayExpiredAds.Title + " - Place new Order for Advertisement" + "'  WHERE ID = @p0", todayExpiredAds.ID);
-                            await db.Database.ExecuteSqlCommandAsync("UPDATE dbo.[Order] SET OrderStatus = 4, Remedies = 'Expiry Alert - " + todayExpiredAds.Title + " - Place new Order for Advertisement" + "' WHERE ID = @p0", todayExpiredAds.OrderID);
+                            await db.Database.ExecuteSqlCommandAsync("UPDATE Ad SET AdStatus = 2, Remedies = 'Expiry Alert - " + todayExpiredAds.Title + " - Place new Order for Advertisement" + "'  WHERE ID = @p0", todayExpiredAds.Id);
+                            await db.Database.ExecuteSqlCommandAsync("UPDATE dbo.[Order] SET OrderStatus = 4, Remedies = 'Expiry Alert - " + todayExpiredAds.Title + " - Place new Order for Advertisement" + "' WHERE ID = @p0", todayExpiredAds.OrderId);
                         }
                     }
 

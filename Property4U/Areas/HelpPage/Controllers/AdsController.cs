@@ -90,7 +90,7 @@ namespace Property4U.Areas.HelpPage.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != ad.ID)
+            if (id != ad.Id)
             {
                 return BadRequest();
             }
@@ -133,7 +133,7 @@ namespace Property4U.Areas.HelpPage.Controllers
             db.Ads.Add(ad);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = ad.ID }, ad);
+            return CreatedAtRoute("DefaultApi", new { id = ad.Id }, ad);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace Property4U.Areas.HelpPage.Controllers
 
         private bool AdExists(int id)
         {
-            return db.Ads.Count(e => e.ID == id) > 0;
+            return db.Ads.Count(e => e.Id == id) > 0;
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Property4U.Controllers
         public async Task<ActionResult> Index()
         {
             strCurrentUserId = User.Identity.GetUserId();
-            var bids = db.Bids.Include(b => b.Bidding).Include(b => b.Member).Where(m => m.MemberID.Equals(strCurrentUserId));
+            var bids = db.Bids.Include(b => b.Bidding).Include(b => b.Member).Where(m => m.MemberId.Equals(strCurrentUserId));
             return View( await bids.ToListAsync());
         }
 
@@ -69,10 +69,10 @@ namespace Property4U.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.BiddingIDList = new SelectList(await db.Biddings.Where(b => b.BiddingStatus.ToString().Equals("Active")).ToListAsync(), "ID", "ID", bidO.BiddingID);
+            ViewBag.BiddingIDList = new SelectList(await db.Biddings.Where(b => b.BiddingStatus.ToString().Equals("Active")).ToListAsync(), "ID", "ID", bidO.BiddingId);
             strCurrentUserId = User.Identity.GetUserId();
             var ownerMember = await db.Users.Where(d => d.Id == strCurrentUserId).ToListAsync();
-            ViewBag.MemberIDList = new SelectList(ownerMember, "Id", "Id", bidO.MemberID);
+            ViewBag.MemberIDList = new SelectList(ownerMember, "Id", "Id", bidO.MemberId);
             ViewBag.BidOn = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff tt");
             ViewBag.BidStatus = "Process";
             return View(bidO);

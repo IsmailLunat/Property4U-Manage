@@ -29,7 +29,7 @@ namespace Property4U.Areas.HelpPage.Controllers
         public IEnumerable<Bid> GetWonBids()
         {
             strCurrentUserId = User.Identity.GetUserId();
-            return db.Bids.Where(b => b.MemberID == strCurrentUserId && b.BidStatus.ToString().Equals("Winner")).ToList();
+            return db.Bids.Where(b => b.MemberId == strCurrentUserId && b.BidStatus.ToString().Equals("Winner")).ToList();
         }
 
         /// <summary>
@@ -42,9 +42,9 @@ namespace Property4U.Areas.HelpPage.Controllers
         {
             strCurrentUserId = User.Identity.GetUserId();
             if (User.IsInRole("Member"))
-                return db.Bids.Where(b => b.MemberID == strCurrentUserId).ToList();
+                return db.Bids.Where(b => b.MemberId == strCurrentUserId).ToList();
             else
-                return db.Bids.Where(b => b.Bidding.Property.AgentID == strCurrentUserId).ToList();
+                return db.Bids.Where(b => b.Bidding.Property.AgentId == strCurrentUserId).ToList();
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace Property4U.Areas.HelpPage.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != bid.ID)
+            if (id != bid.Id)
             {
                 return BadRequest();
             }
@@ -122,7 +122,7 @@ namespace Property4U.Areas.HelpPage.Controllers
             db.Bids.Add(bid);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = bid.ID }, bid);
+            return CreatedAtRoute("DefaultApi", new { id = bid.Id }, bid);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Property4U.Areas.HelpPage.Controllers
 
         private bool BidExists(int id)
         {
-            return db.Bids.Count(e => e.ID == id) > 0;
+            return db.Bids.Count(e => e.Id == id) > 0;
         }
     }
 }

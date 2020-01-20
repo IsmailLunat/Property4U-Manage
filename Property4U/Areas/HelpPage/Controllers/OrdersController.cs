@@ -30,8 +30,8 @@ namespace Property4U.Areas.HelpPage.Controllers
         {
             strCurrentUserId = User.Identity.GetUserId();
             List<HomeForViewModel> alertsL = new List<HomeForViewModel>();
-            var Orders = db.Orders.Where(o => o.AgentID == strCurrentUserId && o.OrderStatus.ToString().Equals("Approved"))
-                     .GroupBy(o => o.AgentID)
+            var Orders = db.Orders.Where(o => o.AgentId == strCurrentUserId && o.OrderStatus.ToString().Equals("Approved"))
+                     .GroupBy(o => o.AgentId)
                      .Select(o => new HomeForViewModel
                      {
                          Title = "Orders (Approved)",
@@ -40,8 +40,8 @@ namespace Property4U.Areas.HelpPage.Controllers
             if (Orders != null)
                 alertsL.Add(Orders);
 
-            var Reviews = db.Reviews.Where(rev => rev.Property.AgentID == strCurrentUserId)
-                     .GroupBy(rev => rev.Property.AgentID)
+            var Reviews = db.Reviews.Where(rev => rev.Property.AgentId == strCurrentUserId)
+                     .GroupBy(rev => rev.Property.AgentId)
                      .Select(rev => new HomeForViewModel
                      {
                          Title = "Reviews",
@@ -50,8 +50,8 @@ namespace Property4U.Areas.HelpPage.Controllers
             if (Reviews != null)
                 alertsL.Add(Reviews);
 
-            var Renewals = db.Renewals.Where(r => r.Property.AgentID == strCurrentUserId && r.Status.ToString().Equals("Active"))
-                     .GroupBy(r => r.Property.AgentID)
+            var Renewals = db.Renewals.Where(r => r.Property.AgentId == strCurrentUserId && r.Status.ToString().Equals("Active"))
+                     .GroupBy(r => r.Property.AgentId)
                      .Select(r => new HomeForViewModel
                      {
                          Title = "Renewals (Active)",
@@ -126,7 +126,7 @@ namespace Property4U.Areas.HelpPage.Controllers
         {
             strCurrentUserId = User.Identity.GetUserId();
             if (User.IsInRole("Agent"))
-                return db.Orders.Where(o => o.AgentID == strCurrentUserId).ToList();
+                return db.Orders.Where(o => o.AgentId == strCurrentUserId).ToList();
             else
                 return db.Orders.ToList();
         }
@@ -163,7 +163,7 @@ namespace Property4U.Areas.HelpPage.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != order.ID)
+            if (id != order.Id)
             {
                 return BadRequest();
             }
@@ -206,7 +206,7 @@ namespace Property4U.Areas.HelpPage.Controllers
             db.Orders.Add(order);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = order.ID }, order);
+            return CreatedAtRoute("DefaultApi", new { id = order.Id }, order);
         }
 
         /// <summary>
@@ -241,7 +241,7 @@ namespace Property4U.Areas.HelpPage.Controllers
 
         private bool OrderExists(int id)
         {
-            return db.Orders.Count(e => e.ID == id) > 0;
+            return db.Orders.Count(e => e.Id == id) > 0;
         }
     }
 }

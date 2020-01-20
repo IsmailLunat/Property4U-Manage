@@ -43,14 +43,14 @@ namespace IdentitySample.Controllers
             //      }).ToList();
 
             // Find 3 Latest Feature Properties
-            var allFeatured = await db.Properties.Where(p => p.Availability.ToString().Contains("Yes") && p.Featured.ToString().Equals("Yes")).OrderBy(p => p.ID).Take(3).ToListAsync();
+            var allFeatured = await db.Properties.Where(p => p.Availability.ToString().Contains("Yes") && p.Featured.ToString().Equals("Yes")).OrderBy(p => p.Id).Take(3).ToListAsync();
 
             List<HomePropertyPhotoViewModel> allFeaturedPhoto = new List<HomePropertyPhotoViewModel>();
             foreach (var property in allFeatured)
             {
                 HomePropertyPhotoViewModel model = new HomePropertyPhotoViewModel();
                 model.Property = property;
-                model.Photo = await db.Photos.Where(ph => ph.PropertyID == property.ID).OrderBy(ph => ph.ID).Take(1).SingleOrDefaultAsync();
+                model.Photo = await db.Photos.Where(ph => ph.PropertyId == property.Id).OrderBy(ph => ph.Id).Take(1).SingleOrDefaultAsync();
                 //model.Products = db.Photos.Where(ph => ph.PropertyID == property.ID).ToList();
                 allFeaturedPhoto.Add(model);
             }
@@ -99,26 +99,26 @@ namespace IdentitySample.Controllers
             {
                 HomePropertyPhotoViewModel model = new HomePropertyPhotoViewModel();
                 model.Property = property;
-                model.Photo = await db.Photos.Where(ph => ph.PropertyID == property.ID).OrderBy(ph => ph.ID).Take(1).SingleOrDefaultAsync();
+                model.Photo = await db.Photos.Where(ph => ph.PropertyId == property.Id).OrderBy(ph => ph.Id).Take(1).SingleOrDefaultAsync();
                 //model.Products = db.Photos.Where(ph => ph.PropertyID == property.ID).ToList();
                 allPropertyPhoto.Add(model);
             }
             viewModel.PropertyPhoto = allPropertyPhoto.ToList();
 
-            var allRecents = await db.Properties.Where(p => p.Availability.ToString().Contains("Yes") && p.AllowBidding.ToString().Contains("Disabled")).OrderBy(p => p.ID).Take(4).ToListAsync();
+            var allRecents = await db.Properties.Where(p => p.Availability.ToString().Contains("Yes") && p.AllowBidding.ToString().Contains("Disabled")).OrderBy(p => p.Id).Take(4).ToListAsync();
 
             List<HomeRecentPhotoViewModel> allRecentPhoto = new List<HomeRecentPhotoViewModel>();
             foreach (var property in allRecents)
             {
                 HomeRecentPhotoViewModel model = new HomeRecentPhotoViewModel();
                 model.Property = property;
-                model.Photo = await db.Photos.Where(ph => ph.PropertyID == property.ID).OrderBy(ph => ph.ID).Take(1).SingleOrDefaultAsync();
+                model.Photo = await db.Photos.Where(ph => ph.PropertyId == property.Id).OrderBy(ph => ph.Id).Take(1).SingleOrDefaultAsync();
                 //model.Products = db.Photos.Where(ph => ph.PropertyID == property.ID).ToList();
                 allRecentPhoto.Add(model);
             }
             viewModel.RecentPropertyPhoto = allRecentPhoto.ToList();
 
-            var allBiddings = await db.Biddings.Where(b => b.BiddingStatus.ToString().Contains("Active")).OrderByDescending(b => b.ID).Take(4).ToListAsync();
+            var allBiddings = await db.Biddings.Where(b => b.BiddingStatus.ToString().Contains("Active")).OrderByDescending(b => b.Id).Take(4).ToListAsync();
 
             List<BiddingsPhotoViewModel> allBiddingPhoto = new List<BiddingsPhotoViewModel>();
             foreach (var bidding in allBiddings)
@@ -127,7 +127,7 @@ namespace IdentitySample.Controllers
                 model.Bidding = bidding;
                 model.Property = bidding.Property;
                 model.OfSubType = (model.Property.OfSubType != null) ? await db.OfSubTypes.FindAsync(model.Property.OfSubType) : null;
-                model.Photo = await db.Photos.Where(ph => ph.PropertyID == model.Property.ID).OrderBy(ph => ph.ID).Take(1).SingleOrDefaultAsync();
+                model.Photo = await db.Photos.Where(ph => ph.PropertyId == model.Property.Id).OrderBy(ph => ph.Id).Take(1).SingleOrDefaultAsync();
                 //model.Products = db.Photos.Where(ph => ph.PropertyID == property.ID).ToList();
                 allBiddingPhoto.Add(model);
             }
@@ -306,7 +306,7 @@ namespace IdentitySample.Controllers
             {
                 HomePropertyPhotoViewModel model = new HomePropertyPhotoViewModel();
                 model.Property = property;
-                model.Photo = await db.Photos.Where(ph => ph.PropertyID == property.ID).OrderBy(ph => ph.ID).Take(1).SingleOrDefaultAsync();
+                model.Photo = await db.Photos.Where(ph => ph.PropertyId == property.Id).OrderBy(ph => ph.Id).Take(1).SingleOrDefaultAsync();
                 //model.Products = db.Photos.Where(ph => ph.PropertyID == property.ID).ToList();
                 allPropertyPhoto.Add(model);
             }
@@ -334,7 +334,7 @@ namespace IdentitySample.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             DetailsPropertyPhotoViewModel viewModel = new DetailsPropertyPhotoViewModel();
-            viewModel.Property = await db.Properties.Where(p => p.ID == PID && p.Availability.ToString().Equals("Yes")).FirstOrDefaultAsync();
+            viewModel.Property = await db.Properties.Where(p => p.Id == PID && p.Availability.ToString().Equals("Yes")).FirstOrDefaultAsync();
 
 
             if (viewModel.Property != null)
@@ -354,12 +354,12 @@ namespace IdentitySample.Controllers
                     page = 1;
                 }
 
-                var pro = db.Photos.Where(ph => ph.PropertyID == PID);
+                var pro = db.Photos.Where(ph => ph.PropertyId == PID);
                 viewModel.Photos = (pro.Count() > 0) ? await pro.ToListAsync() : null;
 
                 // Find all Properties with number of items count
-                var properties = await db.Properties.Where(p => p.Availability.ToString().Contains("Yes") && p.AgentID == viewModel.Property.AgentID)
-                     .GroupBy(p => p.AgentID)
+                var properties = await db.Properties.Where(p => p.Availability.ToString().Contains("Yes") && p.AgentId == viewModel.Property.AgentId)
+                     .GroupBy(p => p.AgentId)
                      .Select(p => new DetailsAgentProfile
                      {
                          Count = p.Count()
@@ -367,22 +367,22 @@ namespace IdentitySample.Controllers
                 viewModel.AgentProperties = properties;
 
                 // Find all Biddings with number of items count
-                var biddings = await db.Biddings.Where(p => p.BiddingStatus.ToString().Contains("Active") && p.Property.AgentID == viewModel.Property.AgentID)
-                     .GroupBy(p => p.Property.AgentID)
+                var biddings = await db.Biddings.Where(p => p.BiddingStatus.ToString().Contains("Active") && p.Property.AgentId == viewModel.Property.AgentId)
+                     .GroupBy(p => p.Property.AgentId)
                      .Select(p => new DetailsAgentProfile
                      {
                          Count = p.Count()
                      }).FirstOrDefaultAsync();
                 viewModel.AgentBiddings = biddings;
 
-                var allProperties = await db.Properties.Where(p => p.Availability.ToString().Contains("Yes") && p.OfTypeID == viewModel.Property.OfTypeID && p.ID != viewModel.Property.ID).OrderBy(p => p.Views).Take(6).ToListAsync();
+                var allProperties = await db.Properties.Where(p => p.Availability.ToString().Contains("Yes") && p.OfTypeId == viewModel.Property.OfTypeId && p.Id != viewModel.Property.Id).OrderBy(p => p.Views).Take(6).ToListAsync();
 
                 List<HomePropertyPhotoViewModel> allPropertyPhoto = new List<HomePropertyPhotoViewModel>();
                 foreach (var property in allProperties)
                 {
                     HomePropertyPhotoViewModel model = new HomePropertyPhotoViewModel();
                     model.Property = property;
-                    model.Photo = await db.Photos.Where(ph => ph.PropertyID == property.ID).OrderBy(ph => ph.ID).Take(1).SingleOrDefaultAsync();
+                    model.Photo = await db.Photos.Where(ph => ph.PropertyId == property.Id).OrderBy(ph => ph.Id).Take(1).SingleOrDefaultAsync();
                     //model.Products = db.Photos.Where(ph => ph.PropertyID == property.ID).ToList();
                     allPropertyPhoto.Add(model);
                 }
@@ -442,9 +442,9 @@ namespace IdentitySample.Controllers
             IEnumerable<Bidding> allBiddings = null;
             if (status != null)
             {
-                allBiddings = await db.Biddings.Where(b => b.BiddingStatus.ToString().Contains(status)).OrderByDescending(b => b.ID).ToListAsync();
+                allBiddings = await db.Biddings.Where(b => b.BiddingStatus.ToString().Contains(status)).OrderByDescending(b => b.Id).ToListAsync();
             }else{
-                allBiddings = await db.Biddings.OrderByDescending(b => b.ID).ToListAsync();
+                allBiddings = await db.Biddings.OrderByDescending(b => b.Id).ToListAsync();
             }
 
             if (!String.IsNullOrEmpty(searchBidding))
@@ -468,7 +468,7 @@ namespace IdentitySample.Controllers
                     allBiddings = allBiddings.OrderByDescending(b => b.PostedOn);
                     break;
                 default:
-                    allBiddings = allBiddings.OrderByDescending(b => b.ID);
+                    allBiddings = allBiddings.OrderByDescending(b => b.Id);
                     break;
             }
 
@@ -479,7 +479,7 @@ namespace IdentitySample.Controllers
                 model.Bidding = bidding;
                 model.Property = bidding.Property;
                 model.OfSubType = (model.Property.OfSubType != null) ? await db.OfSubTypes.FindAsync(model.Property.OfSubType) : null;
-                model.Photo = await db.Photos.Where(ph => ph.PropertyID == model.Property.ID).OrderBy(ph => ph.ID).Take(1).SingleOrDefaultAsync();
+                model.Photo = await db.Photos.Where(ph => ph.PropertyId == model.Property.Id).OrderBy(ph => ph.Id).Take(1).SingleOrDefaultAsync();
                 //model.Products = db.Photos.Where(ph => ph.PropertyID == property.ID).ToList();
                 allBiddingPhoto.Add(model);
             }
@@ -499,7 +499,7 @@ namespace IdentitySample.Controllers
             }
 
             PlaceBidPropertyPhotoViewModel viewModel = new PlaceBidPropertyPhotoViewModel();
-            viewModel.Bidding = await db.Biddings.Where(b => b.ID == BID).FirstOrDefaultAsync();
+            viewModel.Bidding = await db.Biddings.Where(b => b.Id == BID).FirstOrDefaultAsync();
 
 
             if (viewModel.Bidding != null)
@@ -518,11 +518,11 @@ namespace IdentitySample.Controllers
                     viewModel.WinningBid = await db.Bids.FindAsync(viewModel.Bidding.WinningBid);
                 }
 
-                viewModel.Photo = db.Photos.Where(ph => ph.PropertyID == viewModel.Bidding.PropertyID).FirstOrDefault();
+                viewModel.Photo = db.Photos.Where(ph => ph.PropertyId == viewModel.Bidding.PropertyId).FirstOrDefault();
 
                 // Find all Properties with number of items count
-                var properties = await db.Properties.Where(p => p.Availability.ToString().Contains("Yes") && p.AgentID == viewModel.Bidding.Property.AgentID)
-                     .GroupBy(p => p.AgentID)
+                var properties = await db.Properties.Where(p => p.Availability.ToString().Contains("Yes") && p.AgentId == viewModel.Bidding.Property.AgentId)
+                     .GroupBy(p => p.AgentId)
                      .Select(p => new DetailsAgentProfile
                      {
                          Count = p.Count()
@@ -530,28 +530,28 @@ namespace IdentitySample.Controllers
                 viewModel.AgentProperties = properties;
 
                 // Find all Biddings with number of items count
-                var biddings = await db.Biddings.Where(p => p.BiddingStatus.ToString().Contains("Active") && p.Property.AgentID == viewModel.Bidding.Property.AgentID)
-                     .GroupBy(p => p.Property.AgentID)
+                var biddings = await db.Biddings.Where(p => p.BiddingStatus.ToString().Contains("Active") && p.Property.AgentId == viewModel.Bidding.Property.AgentId)
+                     .GroupBy(p => p.Property.AgentId)
                      .Select(p => new DetailsAgentProfile
                      {
                          Count = p.Count()
                      }).FirstOrDefaultAsync();
                 viewModel.AgentBiddings = biddings;
 
-                var allBiddings = await db.Biddings.Where(p => p.BiddingStatus.ToString().Contains("Active") && p.Property.OfTypeID == viewModel.Bidding.Property.OfTypeID && p.ID != viewModel.Bidding.ID).OrderBy(p => p.Property.Views).Take(4).ToListAsync();
+                var allBiddings = await db.Biddings.Where(p => p.BiddingStatus.ToString().Contains("Active") && p.Property.OfTypeId == viewModel.Bidding.Property.OfTypeId && p.Id != viewModel.Bidding.Id).OrderBy(p => p.Property.Views).Take(4).ToListAsync();
 
                 List<BiddingPhotoViewModel> allBiddingPhoto = new List<BiddingPhotoViewModel>();
                 foreach (var bidding in allBiddings)
                 {
                     BiddingPhotoViewModel model = new BiddingPhotoViewModel();
                     model.Bidding = bidding;
-                    model.Photo = await db.Photos.Where(ph => ph.PropertyID == model.Bidding.PropertyID).OrderBy(ph => ph.ID).Take(1).SingleOrDefaultAsync();
+                    model.Photo = await db.Photos.Where(ph => ph.PropertyId == model.Bidding.PropertyId).OrderBy(ph => ph.Id).Take(1).SingleOrDefaultAsync();
                     //model.Products = db.Photos.Where(ph => ph.PropertyID == property.ID).ToList();
                     allBiddingPhoto.Add(model);
                 }
                 viewModel.RelatedBiddings = allBiddingPhoto.ToList();
 
-                var allBids = await db.Bids.Where(r => r.BiddingID == BID).ToListAsync();
+                var allBids = await db.Bids.Where(r => r.BiddingId == BID).ToListAsync();
                
                 int pageSize = 10;
                 int pageNumber = (page ?? 1);
@@ -589,14 +589,14 @@ namespace IdentitySample.Controllers
             IEnumerable<Bidding> allBiddings = null;
             if ((!String.IsNullOrEmpty(Sr) && filterSearch == "Properties") || (!String.IsNullOrEmpty(Sr) && filterSearch == null))
             {
-                allProperties = await db.Properties.Where(p => p.Availability.ToString().Contains("Yes")).OrderByDescending(p => p.ID).ToListAsync();
-                allProperties = allProperties.Where(p => p.ID.ToString().Contains(Sr.ToUpper()) || p.Title.ToUpper().Contains(Sr.ToUpper()) || p.Agent.FullName.ToUpper().Contains(Sr.ToUpper()) );
+                allProperties = await db.Properties.Where(p => p.Availability.ToString().Contains("Yes")).OrderByDescending(p => p.Id).ToListAsync();
+                allProperties = allProperties.Where(p => p.Id.ToString().Contains(Sr.ToUpper()) || p.Title.ToUpper().Contains(Sr.ToUpper()) || p.Agent.FullName.ToUpper().Contains(Sr.ToUpper()) );
                 List<HomePropertyPhotoViewModel> allPropertyPhoto = new List<HomePropertyPhotoViewModel>();
                 foreach (var property in allProperties)
                 {
                     HomePropertyPhotoViewModel model = new HomePropertyPhotoViewModel();
                     model.Property = property;
-                    model.Photo = await db.Photos.Where(ph => ph.PropertyID == property.ID).OrderBy(ph => ph.ID).Take(1).SingleOrDefaultAsync();
+                    model.Photo = await db.Photos.Where(ph => ph.PropertyId == property.Id).OrderBy(ph => ph.Id).Take(1).SingleOrDefaultAsync();
                     //model.Products = db.Photos.Where(ph => ph.PropertyID == property.ID).ToList();
                     allPropertyPhoto.Add(model);
                 }
@@ -607,8 +607,8 @@ namespace IdentitySample.Controllers
             }
             else if (Sr != null && filterSearch == "Biddings" )
             {
-                allBiddings = await db.Biddings.OrderByDescending(b => b.ID).ToListAsync();
-                allBiddings = allBiddings.Where(b => b.ID.ToString().Contains(Sr.ToUpper()) || b.Title.ToUpper().Contains(Sr.ToUpper()) || b.Property.Agent.FullName.ToUpper().Contains(Sr.ToUpper()));
+                allBiddings = await db.Biddings.OrderByDescending(b => b.Id).ToListAsync();
+                allBiddings = allBiddings.Where(b => b.Id.ToString().Contains(Sr.ToUpper()) || b.Title.ToUpper().Contains(Sr.ToUpper()) || b.Property.Agent.FullName.ToUpper().Contains(Sr.ToUpper()));
 
                 List<BiddingsPhotoViewModel> allBiddingPhoto = new List<BiddingsPhotoViewModel>();
                 foreach (var bidding in allBiddings)
@@ -616,7 +616,7 @@ namespace IdentitySample.Controllers
                     BiddingsPhotoViewModel model = new BiddingsPhotoViewModel();
                     model.Bidding = bidding;
                     model.Property = bidding.Property;
-                    model.Photo = await db.Photos.Where(ph => ph.PropertyID == model.Property.ID).OrderBy(ph => ph.ID).Take(1).SingleOrDefaultAsync();
+                    model.Photo = await db.Photos.Where(ph => ph.PropertyId == model.Property.Id).OrderBy(ph => ph.Id).Take(1).SingleOrDefaultAsync();
                     //model.Products = db.Photos.Where(ph => ph.PropertyID == property.ID).ToList();
                     allBiddingPhoto.Add(model);
                 }
@@ -749,7 +749,7 @@ namespace IdentitySample.Controllers
                 {
                     HomePropertyPhotoViewModel model = new HomePropertyPhotoViewModel();
                     model.Property = property;
-                    model.Photo = await db.Photos.Where(ph => ph.PropertyID == property.ID).OrderBy(ph => ph.ID).Take(1).SingleOrDefaultAsync();
+                    model.Photo = await db.Photos.Where(ph => ph.PropertyId == property.Id).OrderBy(ph => ph.Id).Take(1).SingleOrDefaultAsync();
                     //model.Products = db.Photos.Where(ph => ph.PropertyID == property.ID).ToList();
                     allPropertyPhoto.Add(model);
                 }
@@ -769,7 +769,7 @@ namespace IdentitySample.Controllers
                     BiddingsPhotoViewModel model = new BiddingsPhotoViewModel();
                     model.Bidding = bidding;
                     model.Property = bidding.Property;
-                    model.Photo = await db.Photos.Where(ph => ph.PropertyID == model.Property.ID).OrderBy(ph => ph.ID).Take(1).SingleOrDefaultAsync();
+                    model.Photo = await db.Photos.Where(ph => ph.PropertyId == model.Property.Id).OrderBy(ph => ph.Id).Take(1).SingleOrDefaultAsync();
                     //model.Products = db.Photos.Where(ph => ph.PropertyID == property.ID).ToList();
                     allBiddingPhoto.Add(model);
                 }
@@ -817,14 +817,14 @@ namespace IdentitySample.Controllers
                 {
                     ComparePropertyReviewsViewModel model = new ComparePropertyReviewsViewModel();
                     model.Property = property;
-                    model.Photo = await db.Photos.Where(ph => ph.PropertyID == property.ID).OrderBy(ph => ph.ID).Take(1).SingleOrDefaultAsync();
+                    model.Photo = await db.Photos.Where(ph => ph.PropertyId == property.Id).OrderBy(ph => ph.Id).Take(1).SingleOrDefaultAsync();
                     //model.Products = db.Photos.Where(ph => ph.PropertyID == property.ID).ToList();
 
                     var subType = await db.OfSubTypes.Where(s => s.ID == model.Property.OfSubType).FirstOrDefaultAsync();
                     model.SubType = subType.Title;
 
-                    DetailsAgentProfile ReviewsCount = await db.Reviews.Where(r => r.PropertyID == model.Property.ID)
-                         .GroupBy(r => r.Property.AgentID)
+                    DetailsAgentProfile ReviewsCount = await db.Reviews.Where(r => r.PropertyID == model.Property.Id)
+                         .GroupBy(r => r.Property.AgentId)
                          .Select(r => new DetailsAgentProfile
                          {
                              Count = r.Count()
@@ -832,7 +832,7 @@ namespace IdentitySample.Controllers
                     model.ReviewsCount = (ReviewsCount != null) ?  ReviewsCount.Count : 0;
 
                     // Find all Reviews with number of items count
-                    var allReviewsC = await db.Reviews.Where(r => r.PropertyID == model.Property.ID)
+                    var allReviewsC = await db.Reviews.Where(r => r.PropertyID == model.Property.Id)
                          .GroupBy(r => r.ID)
                          .Select(p => new DetailsPropertyRatingViewModel
                          {

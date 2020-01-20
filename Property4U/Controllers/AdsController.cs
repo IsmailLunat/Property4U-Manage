@@ -106,7 +106,7 @@ namespace Property4U.Controllers
                 {
                     orderStatus = 4;
                 }
-                db.Database.ExecuteSqlCommand("UPDATE [dbo].[Order] SET OrderStatus = {0}, Remedies = {1} WHERE ID = {2}", orderStatus, ad.Remedies, ad.OrderID);
+                db.Database.ExecuteSqlCommand("UPDATE [dbo].[Order] SET OrderStatus = {0}, Remedies = {1} WHERE ID = {2}", orderStatus, ad.Remedies, ad.OrderId);
                 db.Ads.Add(ad);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -114,9 +114,9 @@ namespace Property4U.Controllers
 
             strCurrentUserId = User.Identity.GetUserId();
             var ownerAdmin = await db.Users.Where(d => d.Id == strCurrentUserId).ToListAsync();
-            ViewBag.AdminIDList = new SelectList(ownerAdmin, "Id", "Id", ad.AdminID);
+            ViewBag.AdminIDList = new SelectList(ownerAdmin, "Id", "Id", ad.AdminId);
 
-            ViewBag.OrderIDList = new SelectList(db.Orders, "ID", "ID", ad.OrderID);
+            ViewBag.OrderIDList = new SelectList(db.Orders, "ID", "ID", ad.OrderId);
             ViewBag.PostedOn = DateTime.Now.ToString("yyyy-MM-dd");
             return View(ad);
         }
@@ -138,7 +138,7 @@ namespace Property4U.Controllers
             var ownerAdmin = await db.Users.Where(d => d.Id == strCurrentUserId).ToListAsync();
             ViewBag.AdminIDList = new SelectList(ownerAdmin, "Id", "Id", strCurrentUserId);
 
-            ViewBag.OrderIDList = new SelectList(db.Orders, "ID", "ID", ad.OrderID);
+            ViewBag.OrderIDList = new SelectList(db.Orders, "ID", "ID", ad.OrderId);
             ViewBag.LastEdit = DateTime.Now;
             return View(ad);
         }
@@ -189,7 +189,7 @@ namespace Property4U.Controllers
                 {
                     orderStatus = 4;
                 }
-                db.Database.ExecuteSqlCommand("UPDATE [dbo].[Order] SET OrderStatus = {0}, Remedies = {1} WHERE ID = {2}", orderStatus, ad.Remedies, ad.OrderID);
+                db.Database.ExecuteSqlCommand("UPDATE [dbo].[Order] SET OrderStatus = {0}, Remedies = {1} WHERE ID = {2}", orderStatus, ad.Remedies, ad.OrderId);
 
                 db.Entry(ad).State = EntityState.Modified;
                 await db.SaveChangesAsync();
@@ -198,9 +198,9 @@ namespace Property4U.Controllers
 
             strCurrentUserId = User.Identity.GetUserId();
             var ownerAdmin = await db.Users.Where(d => d.Id == strCurrentUserId).ToListAsync();
-            ViewBag.AdminIDList = new SelectList(ownerAdmin, "Id", "Id", ad.AdminID);
+            ViewBag.AdminIDList = new SelectList(ownerAdmin, "Id", "Id", ad.AdminId);
 
-            ViewBag.OrderIDList = new SelectList(db.Orders, "ID", "ID", ad.OrderID);
+            ViewBag.OrderIDList = new SelectList(db.Orders, "ID", "ID", ad.OrderId);
             ViewBag.LastEdit = DateTime.Now;
             return View(ad);
         }

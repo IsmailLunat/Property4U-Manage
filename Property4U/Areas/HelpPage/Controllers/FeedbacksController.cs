@@ -41,7 +41,7 @@ namespace Property4U.Areas.HelpPage.Controllers
         {
             strCurrentUserId = User.Identity.GetUserId();
             if (User.IsInRole("Member"))
-                return db.Feedbacks.Where(b => b.MemberID == strCurrentUserId).ToList();
+                return db.Feedbacks.Where(b => b.MemberId == strCurrentUserId).ToList();
             else
                 return db.Feedbacks.ToList();
         }
@@ -78,7 +78,7 @@ namespace Property4U.Areas.HelpPage.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != feedback.ID)
+            if (id != feedback.Id)
             {
                 return BadRequest();
             }
@@ -121,7 +121,7 @@ namespace Property4U.Areas.HelpPage.Controllers
             db.Feedbacks.Add(feedback);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = feedback.ID }, feedback);
+            return CreatedAtRoute("DefaultApi", new { id = feedback.Id }, feedback);
         }
 
         /// <summary>
@@ -156,7 +156,7 @@ namespace Property4U.Areas.HelpPage.Controllers
 
         private bool FeedbackExists(int id)
         {
-            return db.Feedbacks.Count(e => e.ID == id) > 0;
+            return db.Feedbacks.Count(e => e.Id == id) > 0;
         }
     }
 }

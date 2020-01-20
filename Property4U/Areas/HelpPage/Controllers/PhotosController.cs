@@ -28,7 +28,7 @@ namespace Property4U.Areas.HelpPage.Controllers
         // GET: api/GetPropertyPhotos
         public IEnumerable<Photo> GetPropertyPhotos(int PID)
         {
-            return db.Photos.Where(ph => ph.PropertyID == PID).ToList();
+            return db.Photos.Where(ph => ph.PropertyId == PID).ToList();
         }
 
         /// <summary>
@@ -40,7 +40,7 @@ namespace Property4U.Areas.HelpPage.Controllers
         public IEnumerable<Photo> GetPhotos()
         {
             strCurrentUserId = User.Identity.GetUserId();
-            return db.Photos.Where(ph => ph.Property.AgentID == strCurrentUserId).ToList();
+            return db.Photos.Where(ph => ph.Property.AgentId == strCurrentUserId).ToList();
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Property4U.Areas.HelpPage.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != photo.ID)
+            if (id != photo.Id)
             {
                 return BadRequest();
             }
@@ -118,7 +118,7 @@ namespace Property4U.Areas.HelpPage.Controllers
             db.Photos.Add(photo);
             await db.SaveChangesAsync();
 
-            return CreatedAtRoute("DefaultApi", new { id = photo.ID }, photo);
+            return CreatedAtRoute("DefaultApi", new { id = photo.Id }, photo);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Property4U.Areas.HelpPage.Controllers
 
         private bool PhotoExists(int id)
         {
-            return db.Photos.Count(e => e.ID == id) > 0;
+            return db.Photos.Count(e => e.Id == id) > 0;
         }
     }
 }

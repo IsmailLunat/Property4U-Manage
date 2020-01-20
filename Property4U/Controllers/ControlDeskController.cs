@@ -172,11 +172,11 @@ namespace IdentitySample.Controllers
             strCurrentUserId = User.Identity.GetUserId();
 
             // GetActiveBiddingsAG - ControlDeskActiveAG
-            var biddingsA = await db.Biddings.Where(r => r.Property.AgentID.Equals(strCurrentUserId) && r.BiddingStatus.ToString().Equals("Active")).ToListAsync();
+            var biddingsA = await db.Biddings.Where(r => r.Property.AgentId.Equals(strCurrentUserId) && r.BiddingStatus.ToString().Equals("Active")).ToListAsync();
             con.Biddings = biddingsA.Count;
 
             // GetPendingOrdersAG - ControlDeskActiveAG
-            var ordersP = await db.Orders.Where(o => o.AgentID.Equals(strCurrentUserId) && o.OrderStatus.ToString().Equals("Pending")).ToListAsync();
+            var ordersP = await db.Orders.Where(o => o.AgentId.Equals(strCurrentUserId) && o.OrderStatus.ToString().Equals("Pending")).ToListAsync();
             con.PendingOrders = ordersP.Count;
 
             // GetPendingOrdersAG - ControlDeskActiveAG
@@ -184,7 +184,7 @@ namespace IdentitySample.Controllers
             //con.PendingOrders = ordersR.Count;
 
             // GetActiveAdsAG - ControlDeskActiveAG
-            var adsR = await db.Ads.Where(a => a.Order.AgentID.Equals(strCurrentUserId) && a.AdStatus.ToString().Equals("Active")).ToListAsync();
+            var adsR = await db.Ads.Where(a => a.Order.AgentId.Equals(strCurrentUserId) && a.AdStatus.ToString().Equals("Active")).ToListAsync();
             con.ActiveAds = adsR.Count;
 
             // GetAgreeResponsesAG - ControlDeskActiveAG
@@ -251,11 +251,11 @@ namespace IdentitySample.Controllers
             con.RequestsAccepted = requestsA.Count;
 
             // GetProcessBidsME - ControlDeskActiveME
-            var bidsP = await db.Bids.Where(r => r.MemberID.Equals(strCurrentUserId) && r.BidStatus.ToString().Equals("Process")).ToListAsync();
+            var bidsP = await db.Bids.Where(r => r.MemberId.Equals(strCurrentUserId) && r.BidStatus.ToString().Equals("Process")).ToListAsync();
             con.BidsProcess = bidsP.Count;
 
             // GetWinnerBidsME - ControlDeskActiveME
-            var bidsW = await db.Bids.Where(r => r.MemberID.Equals(strCurrentUserId) && r.BidStatus.ToString().Equals("Winner") && r.BidOn.Year.Equals(DateTime.Today.Year)).ToListAsync();
+            var bidsW = await db.Bids.Where(r => r.MemberId.Equals(strCurrentUserId) && r.BidStatus.ToString().Equals("Winner") && r.BidOn.Year.Equals(DateTime.Today.Year)).ToListAsync();
             con.BidsWin = bidsW.Count;
 
             return con;

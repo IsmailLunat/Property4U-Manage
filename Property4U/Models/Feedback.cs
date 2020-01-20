@@ -1,23 +1,20 @@
-﻿using IdentitySample.Models;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
+using IdentitySample.Models;
 
 namespace Property4U.Models
 {
     public class Feedback
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Required]
-        public int PropertyID { get; set; }
+        public int PropertyId { get; set; }
 
         [Required]
         [Display(Name = "MemberID")]
-        public string MemberID { get; set; }
+        public string MemberId { get; set; }
 
         [Required]
         public For_Report? For { get; set; }
@@ -63,17 +60,22 @@ namespace Property4U.Models
     {
         [Display(Name = "Report Abuse")]
         Report_Abuse = 1,
+
         [Display(Name = "Process Feedback")]
         Process_Feedback = 2
     }
 
-    public enum AgentRating {
+    public enum AgentRating
+    {
         [Display(Name = "Very Unhappy")]
         Very_Unhappy = 1,
+
         [Display(Name = "Unhappy")]
         Unhappy = 2,
+
         Neutral = 3,
         Happy = 4,
+
         [Display(Name = "Very Happy")]
         Very_Happy = 5
     }

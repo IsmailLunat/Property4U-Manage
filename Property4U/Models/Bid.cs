@@ -10,14 +10,14 @@ namespace Property4U.Models
 {
     public class Bid
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Required]
-        public int BiddingID { get; set; }
+        public int BiddingId { get; set; }
 
         [Required]
-        [Display(Name = "MemberID")]
-        public string MemberID { get; set; }
+        [Display(Name = "MemberId")]
+        public int MemberId { get; set; }
 
         [Required]
         [StringLength(90, ErrorMessage = "Bid Title cannot be longer than 90 characters.")]
@@ -37,7 +37,7 @@ namespace Property4U.Models
 
         [Required]
         [DataType(DataType.DateTime)]
-        //[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss:}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss:}", ApplyFormatInEditMode = true)]
         [Display(Name = "Bid On")]
         public DateTime BidOn { get; set; }
 
@@ -51,7 +51,7 @@ namespace Property4U.Models
 
         public virtual Bidding Bidding { get; set; }
 
-        [ForeignKey("MemberID")]
+        [ForeignKey("MemberId")]
         public virtual ApplicationUser Member { get; set; }
     }
 

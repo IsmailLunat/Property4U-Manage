@@ -1,13 +1,11 @@
-﻿using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Property4U.Models;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Property4U.Models;
 
 namespace IdentitySample.Models
 {
@@ -31,6 +29,7 @@ namespace IdentitySample.Models
         }
 
         /* Extending User Attributes for Property4U */
+
         [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
@@ -96,23 +95,27 @@ namespace IdentitySample.Models
 
         [Display(Name = "Joined Date")]
         public System.DateTime? JoinedDate { get; set; }
-
     }
 
     // Custom Implementation Derived from the Default IdentityRole Class - P4U
     public class ApplicationRole : IdentityRole
     {
-        public ApplicationRole() : base() { }
-        public ApplicationRole(string name) : base(name) { }
+        public ApplicationRole() : base()
+        {
+        }
+
+        public ApplicationRole(string name) : base(name)
+        {
+        }
+
         // Custom Attribute - P4U
         public string Responsibilities { get; set; }
     }
 
-
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("Property4UContextS", throwIfV1Schema: false)
+            : base("Database", throwIfV1Schema: false)
         {
         }
 
@@ -145,6 +148,7 @@ namespace IdentitySample.Models
         public DbSet<OfSubType> OfSubTypes { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Reply> Replies { get; set; }
+
         // Initialize to Make RoleManager work with "ApplicationRole" instead of defualt "IdentityRole" in "AccountController API"
         public DbSet<ApplicationRole> Roles { get; set; }
 
@@ -154,6 +158,5 @@ namespace IdentitySample.Models
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
         }
-
     }
 }

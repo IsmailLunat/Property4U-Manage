@@ -23,7 +23,7 @@ namespace Property4U.Controllers
         public async Task<ActionResult> Index()
         {
             strCurrentUserId = User.Identity.GetUserId();
-            var reviews = db.Reviews.Include(r => r.Property).Where(r => r.Property.AgentID.Equals(strCurrentUserId));
+            var reviews = db.Reviews.Include(r => r.Property).Where(r => r.Property.AgentId.Equals(strCurrentUserId));
             return View(await reviews.ToListAsync());
         }
 

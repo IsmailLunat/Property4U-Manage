@@ -25,14 +25,14 @@ namespace Property4U.Controllers
         {
             var viewModel = new BiddingIndexData();
             strCurrentUserId = User.Identity.GetUserId();
-            var biddings = db.Biddings.Include(b => b.Property).Where(b => b.Property.AgentID.Equals(strCurrentUserId));
+            var biddings = db.Biddings.Include(b => b.Property).Where(b => b.Property.AgentId.Equals(strCurrentUserId));
             viewModel.Biddings = await biddings.ToListAsync();
 
             if (id != null)
             {
                 ViewBag.BiddingID = id.Value;
                 viewModel.Bids = viewModel.Biddings.Where(
-                    x => x.ID == id).Single().Bids;
+                    x => x.Id == id).Single().Bids;
             }
 
             return View(viewModel);
@@ -60,7 +60,7 @@ namespace Property4U.Controllers
         public async Task<ActionResult> Create()
         {
             strCurrentUserId = User.Identity.GetUserId();
-            ViewBag.PropertyIDList = new SelectList(await db.Properties.Where(p => p.AllowBidding.ToString().Equals("Allowed") && p.Availability.ToString().Equals("Yes") && p.AgentID.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID");
+            ViewBag.PropertyIDList = new SelectList(await db.Properties.Where(p => p.AllowBidding.ToString().Equals("Allowed") && p.Availability.ToString().Equals("Yes") && p.AgentId.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID");
             ViewBag.PostedOn = DateTime.Now.ToString("yyyy-MM-dd");
             ViewBag.BiddingStatus = "Active";
             return View();
@@ -82,7 +82,7 @@ namespace Property4U.Controllers
             }
 
             strCurrentUserId = User.Identity.GetUserId();
-            ViewBag.PropertyIDList = new SelectList(await db.Properties.Where(p => p.AllowBidding.ToString().Equals("Allowed") && p.Availability.ToString().Equals("Yes") && p.AgentID.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID", bidding.PropertyID);
+            ViewBag.PropertyIDList = new SelectList(await db.Properties.Where(p => p.AllowBidding.ToString().Equals("Allowed") && p.Availability.ToString().Equals("Yes") && p.AgentId.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID", bidding.PropertyId);
             ViewBag.PostedOn = DateTime.Now.ToString("yyyy-MM-dd");
             ViewBag.BiddingStatus = "Active";
             return View(bidding);
@@ -103,7 +103,7 @@ namespace Property4U.Controllers
             }
 
             strCurrentUserId = User.Identity.GetUserId();
-            ViewBag.PropertyIDList = new SelectList(await db.Properties.Where(p => p.AllowBidding.ToString().Equals("Allowed") && p.Availability.ToString().Equals("Yes") && p.AgentID.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID", bidding.PropertyID);
+            ViewBag.PropertyIDList = new SelectList(await db.Properties.Where(p => p.AllowBidding.ToString().Equals("Allowed") && p.Availability.ToString().Equals("Yes") && p.AgentId.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID", bidding.PropertyId);
             ViewBag.BiddingStatus = bidding.BiddingStatus;
             ViewBag.LastEdit = DateTime.Now;
             return View(bidding);
@@ -125,7 +125,7 @@ namespace Property4U.Controllers
             }
 
             strCurrentUserId = User.Identity.GetUserId();
-            ViewBag.PropertyIDList = new SelectList(await db.Properties.Where(p => p.AllowBidding.ToString().Equals("Allowed") && p.Availability.ToString().Equals("Yes") && p.AgentID.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID", bidding.PropertyID);
+            ViewBag.PropertyIDList = new SelectList(await db.Properties.Where(p => p.AllowBidding.ToString().Equals("Allowed") && p.Availability.ToString().Equals("Yes") && p.AgentId.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID", bidding.PropertyId);
             ViewBag.BiddingStatus = bidding.BiddingStatus;
             ViewBag.LastEdit = DateTime.Now;
             return View(bidding);
@@ -188,14 +188,14 @@ namespace Property4U.Controllers
             {
                 ViewBag.PropertyID = id.Value;
                 viewModel.Biddings = viewModel.Properties.Where(
-                    i => i.ID == id.Value).Single().Biddings;
+                    i => i.Id == id.Value).Single().Biddings;
             }
 
             if (biddingID != null)
             {
                 ViewBag.BiddingID = biddingID.Value;
                 viewModel.Bids = viewModel.Biddings.Where(
-                    x => x.ID == biddingID).Single().Bids;
+                    x => x.Id == biddingID).Single().Bids;
             }
 
             switch (sortOrder)

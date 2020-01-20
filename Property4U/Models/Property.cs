@@ -1,29 +1,26 @@
-﻿using IdentitySample.Models;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Web;
+using IdentitySample.Models;
+using Newtonsoft.Json;
 
 namespace Property4U.Models
 {
     public class Property
-    { 
-        public int ID { get; set; }
+    {
+        public int Id { get; set; }
 
         [Required]
-        [Display(Name = "AgentID")]
-        public string AgentID { get; set; }
+        [Display(Name = "AgentId")]
+        public int AgentId { get; set; }
 
         [Required]
-        public int AddressID { get; set; }
+        public int AddressId { get; set; }
 
         [Required]
-        public int OfTypeID { get; set; }
+        public OfType OfTypeId { get; set; }
 
         [Display(Name = "SubType")]
         public int OfSubType { get; set; }
@@ -36,16 +33,13 @@ namespace Property4U.Models
         [StringLength(120, ErrorMessage = "Seller Name cannot be longer than 120 characters.")]
         public string Seller { get; set; }
 
-        //[Required]
-        //[Display(Name = "Type")]
-        //public OfType? OfType { get; set; }
-
         [Required]
         [StringLength(120, ErrorMessage = "Locality cannot be longer than 120 characters.")]
         public string Locality { get; set; }
 
         [Display(Name = "Covered Area")]
         public double? CoveredAreaMeasurement { get; set; }
+
         [Display(Name = "Covered Area Units")]
         public AreaUnits? CoveredAreaUnits { get; set; }
 
@@ -142,42 +136,30 @@ namespace Property4U.Models
         [Display(Name = "Last Edit")]
         public DateTime? LastEdit { get; set; }
 
-        
-        [ForeignKey("AgentID")]
+        [ForeignKey("AgentId")]
         public virtual ApplicationUser Agent { get; set; }
+
         public virtual ICollection<Request> Requests { get; set; }
         public virtual ICollection<Photo> Photos { get; set; }
         public virtual ICollection<Renewal> Renewals { get; set; }
         public virtual Address Address { get; set; }
 
         // Ignore because of Many to Many relation cause exception for Json (Properties/Features) requests.
-        [JsonIgnore] 
-        [IgnoreDataMember] 
+        [JsonIgnore]
+        [IgnoreDataMember]
         public virtual ICollection<Feature> Features { get; set; }
+
         public virtual ICollection<Feedback> Feedbacks { get; set; }
         public virtual ICollection<Bidding> Biddings { get; set; }
         public virtual OfType OfType { get; set; }
         public virtual ICollection<Review> Reviews { get; set; }
-
     }
-
-    //public enum OfType
-    //{
-    //    Developing,
-    //    Apartment,
-    //    House,
-    //    Bunglows,
-    //    Land,
-    //    Commercial,
-    //    Condominium,
-    //    [Display(Name = "Office Space")]
-    //    Office_Space
-    //}
 
     public enum Condition
     {
         New,
         Repaired,
+
         [Display(Name = "Well Maintained")]
         WellMaintained
     }
@@ -192,20 +174,28 @@ namespace Property4U.Models
     {
         [Display(Name = "Ceramic or Porcelin Tile")]
         Ceramic_or_Porcelin_Tile,
+
         [Display(Name = "Flooting Wood Title")]
         Flooting_Wood_Title,
+
         [Display(Name = "Carpet")]
         Carpet,
+
         [Display(Name = "Hardwood")]
         Hardwood,
+
         [Display(Name = "Engineered Wood")]
         Engineered_Wood,
+
         [Display(Name = "Bamboo")]
         Bamboo,
+
         [Display(Name = "Cork")]
         Cork,
+
         [Display(Name = "Stone")]
         Stone,
+
         [Display(Name = "Vinyl")]
         Vinyl
     }
@@ -220,8 +210,10 @@ namespace Property4U.Models
     {
         [Display(Name = "ft²")]
         ft2,
+
         [Display(Name = "m²")]
         m2,
+
         Acre,
         Marla,
         Kanal
@@ -249,26 +241,37 @@ namespace Property4U.Models
     {
         [Display(Name = "Sold")]
         Sold,
+
         [Display(Name = "Hot")]
         Hot,
+
         [Display(Name = "Reduced")]
         Reduced,
+
         [Display(Name = "Under Offer")]
         Under_Offer,
+
         [Display(Name = "In Discount")]
         In_Discount,
+
         [Display(Name = "Repossession")]
         Repossession,
+
         [Display(Name = "Foreclosure")]
         Foreclosure,
+
         [Display(Name = "No Chain")]
         No_Chain,
+
         [Display(Name = "Vacant")]
         Vacant,
+
         [Display(Name = "Free Hold")]
         Free_Hold,
+
         [Display(Name = "Lease")]
         Lease,
+
         [Display(Name = "New")]
         New
     }
@@ -278,44 +281,4 @@ namespace Property4U.Models
         Yes,
         No
     }
-    
 }
-
-
-//public Furnished? Furnished { get; set; }
-//public enum Furnished
-//    {
-//        Yes,
-//        No
-//    }
-
-//[Display(Name = "Covered Area")]
-//public double CoveredAreaMeasurement { get; set; }
-//[Display(Name = "Covered Area Units")]
-//public AreaUnits CoveredAreaUnits { get; set; }
-//[Display(Name = "Floor No")]
-//public int? FloorNo { get; set; }
-
-//public Flooring? Flooring { get; set; }
-//public enum Flooring
-//    {
-//        [Display(Name = "Ceramic or Porcelin Tile")]
-//        UCeramic_or_Porcelin_Tile,
-//        [Display(Name = "Flooting Wood Title")]
-//        Flooting_Wood_Title,
-//        [Display(Name = "Carpet")]
-//        Carpet,
-//        [Display(Name = "Hardwood")]
-//        Hardwood,
-//        [Display(Name = "Engineered Wood")]
-//        Engineered_Wood,
-//        [Display(Name = "Bamboo")]
-//        Bamboo,
-//        [Display(Name = "Cork")]
-//        Cork,
-//        [Display(Name = "Stone")]
-//        Stone,
-//        [Display(Name = "Vinyl")]
-//        Vinyl
-//    }
-//public int? Flags { get; set; }

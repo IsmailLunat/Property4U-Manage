@@ -11,14 +11,14 @@ namespace Property4U.Models
 {
     public class Ad
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [Display(Name = "AdminID")]
-        public string AdminID { get; set; }
+        public int AdminId { get; set; }
 
         [Required]
-        public int OrderID { get; set; }
+        public int OrderId { get; set; }
 
         [Required]
         [StringLength(90, ErrorMessage = "Ad Title cannot be longer than 90 characters.")]

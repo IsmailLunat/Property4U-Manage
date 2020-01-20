@@ -1,16 +1,14 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Web;
+using Newtonsoft.Json;
 
 namespace Property4U.Models
 {
     public class Feature
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Required]
         [StringLength(50, ErrorMessage = "Feature Title cannot be longer than 50 characters.")]
@@ -35,7 +33,7 @@ namespace Property4U.Models
 
         // Ignore because of Many to Many relation cause exception for Json (Properties/Features) requests.
         [JsonIgnore]
-        [IgnoreDataMember] 
+        [IgnoreDataMember]
         public virtual ICollection<Property> Properties { get; set; }
     }
 }

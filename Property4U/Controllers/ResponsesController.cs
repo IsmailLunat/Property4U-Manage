@@ -63,7 +63,7 @@ namespace Property4U.Controllers
             var ownerAgent = await db.Users.Where(d => d.Id == strCurrentUserId).ToListAsync();
             ViewBag.AgentIDList = new SelectList(ownerAgent, "Id", "Id");
             // Get Requests belong to current Agent's Property
-            ViewBag.RequestIDList = new SelectList(await db.Requests.Where(r => r.Property.AgentID.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID");
+            ViewBag.RequestIDList = new SelectList(await db.Requests.Where(r => r.Property.AgentId.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID");
             ViewBag.ResponseOn = DateTime.Now.ToString("yyyy-MM-dd");
 
             return View();
@@ -91,7 +91,7 @@ namespace Property4U.Controllers
             var ownerAgent = await db.Users.Where(d => d.Id == strCurrentUserId).ToListAsync();
             ViewBag.AgentIDList = new SelectList(ownerAgent, "Id", "Id", response.AgentID);
             // Get Requests belong to current Agent's Property
-            ViewBag.RequestIDList = new SelectList(await db.Requests.Where(r => r.Property.AgentID.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID", response.RequestID);
+            ViewBag.RequestIDList = new SelectList(await db.Requests.Where(r => r.Property.AgentId.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID", response.RequestID);
             ViewBag.ResponseOn = DateTime.Now.ToString("yyyy-MM-dd");
             return View(response);
         }
@@ -113,7 +113,7 @@ namespace Property4U.Controllers
             var ownerAgent = await db.Users.Where(d => d.Id == strCurrentUserId).ToListAsync();
             ViewBag.AgentIDList = new SelectList(ownerAgent, "Id", "Id", response.AgentID);
             // Get Requests belong to current Agent's Property
-            ViewBag.RequestIDList = new SelectList(await db.Requests.Where(r => r.Property.AgentID.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID", response.RequestID);
+            ViewBag.RequestIDList = new SelectList(await db.Requests.Where(r => r.Property.AgentId.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID", response.RequestID);
             ViewBag.LastEdit = DateTime.Now;
             return View(response);
         }
@@ -140,7 +140,7 @@ namespace Property4U.Controllers
             var ownerAgent = await db.Users.Where(d => d.Id == strCurrentUserId).ToListAsync();
             ViewBag.AgentIDList = new SelectList(ownerAgent, "Id", "Id", response.AgentID);
             // Get Requests belong to current Agent's Property
-            ViewBag.RequestIDList = new SelectList(await db.Requests.Where(r => r.Property.AgentID.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID", response.RequestID);
+            ViewBag.RequestIDList = new SelectList(await db.Requests.Where(r => r.Property.AgentId.Equals(strCurrentUserId)).ToListAsync(), "ID", "ID", response.RequestID);
             ViewBag.LastEdit = DateTime.Now;
             return View(response);
         }

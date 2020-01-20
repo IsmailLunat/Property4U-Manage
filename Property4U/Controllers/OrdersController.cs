@@ -31,7 +31,7 @@ namespace Property4U.Controllers
             else 
             {
                 strCurrentUserId = User.Identity.GetUserId();
-                orders = db.Orders.Include(o => o.Agent).Where(o => o.AgentID.Equals(strCurrentUserId));
+                orders = db.Orders.Include(o => o.Agent).Where(o => o.AgentId.Equals(strCurrentUserId));
             }
             return View(await orders.ToListAsync());
         }
@@ -98,7 +98,7 @@ namespace Property4U.Controllers
 
             strCurrentUserId = User.Identity.GetUserId();
             var ownerAgent = await db.Users.Where(d => d.Id == strCurrentUserId).ToListAsync();
-            ViewBag.AgentIDList = new SelectList(ownerAgent, "Id", "Id", order.AgentID);
+            ViewBag.AgentIDList = new SelectList(ownerAgent, "Id", "Id", order.AgentId);
             ViewBag.Date = DateTime.Now.ToString("yyyy-MM-dd");
             ViewBag.OrderStatus = "Pending";
             return View(order);
@@ -120,7 +120,7 @@ namespace Property4U.Controllers
 
             strCurrentUserId = User.Identity.GetUserId();
             var ownerAgent = await db.Users.Where(d => d.Id == strCurrentUserId).ToListAsync();
-            ViewBag.AgentIDList = new SelectList(ownerAgent, "Id", "Id", order.AgentID);
+            ViewBag.AgentIDList = new SelectList(ownerAgent, "Id", "Id", order.AgentId);
             ViewBag.OrderStatus = order.OrderStatus;
             ViewBag.LastEdit = DateTime.Now;
             return View(order);
@@ -159,7 +159,7 @@ namespace Property4U.Controllers
 
             strCurrentUserId = User.Identity.GetUserId();
             var ownerAgent = await db.Users.Where(d => d.Id == strCurrentUserId).ToListAsync();
-            ViewBag.AgentIDList = new SelectList(ownerAgent, "Id", "Id", order.AgentID);
+            ViewBag.AgentIDList = new SelectList(ownerAgent, "Id", "Id", order.AgentId);
             ViewBag.OrderStatus = order.OrderStatus;
             ViewBag.LastEdit = DateTime.Now;
             return View(order);

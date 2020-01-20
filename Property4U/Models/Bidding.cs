@@ -8,10 +8,10 @@ namespace Property4U.Models
 {
     public class Bidding
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Required]
-        public int PropertyID { get; set; }
+        public int PropertyId { get; set; }
 
         [Required]
         [StringLength(90, ErrorMessage = "Bidding Title cannot be longer than 90 characters.")]

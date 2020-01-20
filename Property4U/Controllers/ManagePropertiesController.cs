@@ -46,7 +46,7 @@ namespace Property4U.Controllers
             if (Request.IsAuthenticated && User.IsInRole("Agent"))
             {
                 strCurrentUserId = User.Identity.GetUserId();
-                properties = db.Properties.Include(p => p.Address).Include(p => p.OfType).Include(p => p.Agent).Where(p => p.AgentID.Equals(strCurrentUserId));
+                properties = db.Properties.Include(p => p.Address).Include(p => p.OfType).Include(p => p.Agent).Where(p => p.AgentId.Equals(strCurrentUserId));
             }
             else if (Request.IsAuthenticated && User.IsInRole("Member"))
             {
@@ -83,7 +83,7 @@ namespace Property4U.Controllers
                     properties = properties.OrderByDescending(p => p.PublishOn);
                     break;
                 default:
-                    properties = properties.OrderBy(p => p.ID);
+                    properties = properties.OrderBy(p => p.Id);
                     break;
             }
 
@@ -146,7 +146,7 @@ namespace Property4U.Controllers
 
                 if (SelectedFeatures != null)
                 {
-                    Property edit = await db.Properties.FindAsync(property.ID);
+                    Property edit = await db.Properties.FindAsync(property.Id);
                     if (edit.Features == null) edit.Features = new List<Feature>();
                     foreach (var item in  edit.Features.ToList())
                     {
@@ -161,13 +161,13 @@ namespace Property4U.Controllers
                 return RedirectToAction("Index");
             }
 
-            ViewBag.AddressIDList = new SelectList(db.Addresses, "ID", "ID", property.AddressID);
-            ViewBag.OfTypeIDList = new SelectList(db.OfTypes, "ID", "Title", property.OfTypeID);
+            ViewBag.AddressIDList = new SelectList(db.Addresses, "ID", "ID", property.AddressId);
+            ViewBag.OfTypeIDList = new SelectList(db.OfTypes, "ID", "Title", property.OfTypeId);
             ViewBag.OfSubTypeList = new SelectList(db.OfSubTypes, "ID", "Title", property.OfSubType);
 
             strCurrentUserId = User.Identity.GetUserId();
             var ownerAgent = await db.Users.Where(d => d.Id == strCurrentUserId).ToListAsync();
-            ViewBag.AgentIDList = new SelectList(ownerAgent, "ID", "ID", property.AgentID);
+            ViewBag.AgentIDList = new SelectList(ownerAgent, "ID", "ID", property.AgentId);
 
             ViewBag.SelectedFeatures = new MultiSelectList(db.Features, "ID", "Title");
             ViewBag.PublishOn = DateTime.Now.ToString("yyyy-MM-dd");
@@ -187,16 +187,16 @@ namespace Property4U.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.AddressIDList = new SelectList(db.Addresses, "ID", "ID", property.AddressID);
-            ViewBag.OfTypeIDList = new SelectList(db.OfTypes, "ID", "Title", property.OfTypeID);
+            ViewBag.AddressIDList = new SelectList(db.Addresses, "ID", "ID", property.AddressId);
+            ViewBag.OfTypeIDList = new SelectList(db.OfTypes, "ID", "Title", property.OfTypeId);
             //
-            var subTypes = await db.OfSubTypes.Where(s => s.OfTypeID == property.OfTypeID).ToListAsync();
+            var subTypes = await db.OfSubTypes.Where(s => s.OfTypeID == property.OfTypeId).ToListAsync();
             ViewBag.OfSubType = property.OfSubType; 
 
             strCurrentUserId = User.Identity.GetUserId();
             var ownerAgent = await db.Users.Where(d => d.Id == strCurrentUserId).ToListAsync();
-            ViewBag.AgentIDList = new SelectList(ownerAgent, "ID", "ID", property.AgentID);
-            ViewBag.SelectedFeatures = new MultiSelectList(db.Features, "ID", "Title", property.Features.Select(f => f.ID).ToArray());
+            ViewBag.AgentIDList = new SelectList(ownerAgent, "ID", "ID", property.AgentId);
+            ViewBag.SelectedFeatures = new MultiSelectList(db.Features, "ID", "Title", property.Features.Select(f => f.Id).ToArray());
             ViewBag.Availability = property.Availability;
             ViewBag.LastEdit = DateTime.Now;
 
@@ -213,7 +213,7 @@ namespace Property4U.Controllers
         {
             if (ModelState.IsValid)
             {
-                Property edit = await db.Properties.FindAsync(property.ID);
+                Property edit = await db.Properties.FindAsync(property.Id);
 
                 if (edit.Features == null) 
                     edit.Features = new List<Feature>();
@@ -230,9 +230,9 @@ namespace Property4U.Controllers
                     }
                 }
 
-                edit.AgentID = property.AgentID;
-                edit.AddressID = property.AddressID;
-                edit.OfTypeID = property.OfTypeID;
+                edit.AgentId = property.AgentId;
+                edit.AddressId = property.AddressId;
+                edit.OfTypeId = property.OfTypeId;
                 edit.OfSubType = property.OfSubType;
                 edit.Title = property.Title;
                 edit.Seller = property.Seller;
@@ -276,13 +276,13 @@ namespace Property4U.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            ViewBag.AddressIDList = new SelectList(db.Addresses, "ID", "ID", property.AddressID);
-            ViewBag.OfTypeIDList = new SelectList(db.OfTypes, "ID", "Title", property.OfTypeID);
+            ViewBag.AddressIDList = new SelectList(db.Addresses, "ID", "ID", property.AddressId);
+            ViewBag.OfTypeIDList = new SelectList(db.OfTypes, "ID", "Title", property.OfTypeId);
             ViewBag.OfSubTypeList = new SelectList(db.OfSubTypes, "ID", "Title", property.OfSubType);
 
             strCurrentUserId = User.Identity.GetUserId();
             var ownerAgent = await db.Users.Where(d => d.Id == strCurrentUserId).ToListAsync();
-            ViewBag.AgentIDList = new SelectList(ownerAgent, "ID", "ID", property.AgentID);
+            ViewBag.AgentIDList = new SelectList(ownerAgent, "ID", "ID", property.AgentId);
             ViewBag.Availability = property.Availability;
             ViewBag.LastEdit = DateTime.Now;
 

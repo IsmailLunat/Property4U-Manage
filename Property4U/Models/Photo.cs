@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
 
 namespace Property4U.Models
 {
     public class Photo
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
 
         [Required]
-        public int PropertyID { get; set; }
+        public int PropertyId { get; set; }
 
         [Required]
         [StringLength(50, ErrorMessage = "Photo Title cannot be longer than 50 characters.")]
@@ -41,7 +38,7 @@ namespace Property4U.Models
         [Required]
         [DataType(DataType.DateTime)]
         [Display(Name = "Uploaded On")]
-        public DateTime UploadedOn {get; set;}
+        public DateTime UploadedOn { get; set; }
 
         [DataType(DataType.DateTime)]
         [Display(Name = "Last Edit")]
@@ -49,5 +46,4 @@ namespace Property4U.Models
 
         public virtual Property Property { get; set; }
     }
-
 }

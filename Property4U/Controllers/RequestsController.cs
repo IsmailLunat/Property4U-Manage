@@ -27,7 +27,7 @@ namespace Property4U.Controllers
             if (Request.IsAuthenticated && User.IsInRole("Agent"))
             {
                 strCurrentUserId = User.Identity.GetUserId();
-                requests = db.Requests.Include(r => r.Member).Include(r => r.Property).Where(a => a.Property.AgentID.Equals(strCurrentUserId));
+                requests = db.Requests.Include(r => r.Member).Include(r => r.Property).Where(a => a.Property.AgentId.Equals(strCurrentUserId));
             }
             else
             {
